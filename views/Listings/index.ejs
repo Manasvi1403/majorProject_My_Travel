@@ -1,0 +1,264 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+#filters {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: clamp(10px, 1.5vw, 24px);
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#filters::-webkit-scrollbar {
+    display: none;
+}
+
+.filter {
+    flex: 0 0 auto;
+    min-width: 60px;
+    text-align: center;
+    margin: 0.9rem;
+    padding-bottom: 6px;
+    opacity: 0.7;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+}
+
+.filter:hover {
+    opacity: 1;
+    color: #ff69b4;
+    border-bottom: 2px solid #ff69b4;
+}
+
+.filter p {
+    font-size: 0.8rem;
+    margin: 0.5rem 0 0;
+    white-space: nowrap;
+}
+
+.filter i {
+    font-size: 1.2rem;
+}
+
+
+.tax-toggle {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-left: 50px;
+    padding: 1rem;
+    flex-shrink: 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tax-toggle .form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    min-height: auto;
+}
+
+.tax-toggle .form-check-label {
+    font-size: 15px;
+    color: #555;
+    cursor: pointer;
+}
+
+.tax-toggle .form-check-input {
+    float: none;
+    margin: 0;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    background-color: #aaa;
+    border: 1px solid black;
+    border-radius: 1rem;
+    border-color: #aaa;
+    box-shadow: none;
+}
+
+.tax-toggle .form-check-input:checked {
+    background-color: #ff69b4;
+    border-color: #ff69b4;
+}
+
+.tax-toggle .form-check-input:focus {
+    box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.2);
+}
+
+
+.tax-info{
+    display: none;
+}
+
+/* Mobile screens */
+@media (max-width: 576px) {
+    #filters {
+        gap: 10px;
+    }
+
+    .filter {
+        min-width: 55px;
+    }
+
+    .filter p {
+        font-size: 0.7rem;
+    }
+}
+
+</style>
+
+<div class="d-flex align-items-center">
+    <div id="filters">
+        <a href="/listings?category=Trending" class="filter">
+            <div><i class="fa-solid fa-fire"></i></div>
+            <p>Trending</p>
+        </a>
+
+        <a href="/listings?category=Rooms" class="filter">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <p>Rooms</p>
+        </a>
+
+        <a href="/listings?category=Iconic cities" class="filter">
+            <div><i class="fa-solid fa-mountain-city"></i></div>
+            <p>Iconic cities</p>
+        </a>
+
+        <a href="/listings?category=Mountains" class="filter">
+            <div><i class="fa-solid fa-mountain"></i></div>
+            <p>Mountains</p>
+        </a>
+
+        <a href="/listings?category=Castles" class="filter">
+            <div><i class="fa-brands fa-fort-awesome"></i></div>
+            <p>Castles</p>
+        </a>
+
+        <a href="/listings?category=Amazing Pools" class="filter">
+            <div><i class="fa-solid fa-person-swimming"></i></div>
+            <p>Amazing Pools</p>
+        </a>
+
+        <a href="/listings?category=Camping" class="filter">
+            <div><i class="fa-solid fa-campground"></i></div>
+            <p>Camping</p>
+        </a>
+
+        <a href="/listings?category=Farms" class="filter">
+            <div><i class="fa-solid fa-tractor"></i></div>
+            <p>Farms</p>
+        </a>
+
+        <a href="/listings?category=Arctic" class="filter">
+            <div><i class="fa-solid fa-snowflake"></i></div>
+            <p>Arctic</p>
+        </a>
+
+        <a href="/listings?category=Beachfront" class="filter">
+            <div><i class="fa-solid fa-umbrella-beach"></i></div>
+            <p>Beachfront</p>
+        </a>
+
+        <a href="/listings?category=Villas" class="filter">
+            <div><i class="fa-solid fa-house"></i></div>
+            <p>Villas</p>
+        </a>
+
+        <a href="/listings?category=Cabins" class="filter">
+            <div><i class="fa-solid fa-house-chimney"></i></div>
+            <p>Cabins</p>
+        </a>
+
+        <a href="/listings?category=Lakefront" class="filter">
+            <div><i class="fa-solid fa-water"></i></div>
+            <p>Lakefront</p>
+        </a>
+    </div>
+    <div class="tax-toggle">
+        <div class="form-check form-switch">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+            >
+            <label
+                class="form-check-label"
+                for="flexSwitchCheckDefault"
+            >
+                Display total after Taxes
+            </label>
+        </div>
+    </div>
+
+</div>
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+
+        <% for(let listing of allListing){ %>
+
+            <div class="col mb-4">
+                <a href="/listing/<%= listing._id %>" class="listing-link">
+
+                    <div class="card">
+                        <img 
+                            src="<%= listing.image.url %>" 
+                            class="card-img-top"  
+                            alt="listing_image"
+                        >
+
+                        <div class="card-img-overlay"></div>
+
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <b><%= listing.title %></b>
+                            </h3>
+
+                            <p class="card-text">
+                                &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %> / night
+                                <i class="tax-info">&nbsp;+ 18% GST</i>
+                            </p>
+
+                            <p class="card-text">
+                                <%= listing.location %>, <%= listing.country %>
+                            </p>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+
+        <% } %>
+
+    </div>
+
+
+<script>
+    let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+
+    taxSwitch.addEventListener("click", () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+
+        for (info of taxInfo) {
+            if(info.style.display != "inline"){
+                info.style.display = "inline";
+            }
+            else{
+                info.style.display = "none";
+            }
+            
+        }
+    });
+</script>

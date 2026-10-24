@@ -1,0 +1,105 @@
+<style>
+/* Search input */
+.pink-search-input {
+  width: 255px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.pink-search-input:focus {
+  border-color: #fe4275;
+  box-shadow: 0 0 0 0.2rem rgba(254, 66, 117, 0.15);
+  outline: none;
+}
+
+/* Pink search button */
+.btn-pink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+
+  height: 40px;
+  padding: 0 14px;
+  margin: 0;
+  box-sizing: border-box;
+  white-space: nowrap;
+
+  color: #fe4275;
+  background-color: #fff;
+  border: 1px solid #fe4275;
+  border-radius: 20px;
+
+  transition: all 0.25s ease;
+}
+
+.btn-pink i {
+  margin: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.btn-pink:hover {
+  color: #fff;
+  background-color: #fe4275;
+  border-color: #fe4275;
+}
+
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand nav-icon" href="/listings"><i class="fa-solid fa-person-walking-luggage"></i>My-Travel</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+      
+      <div class="navbar-nav ms-auto">
+        <form
+          class="d-flex align-items-center gap-2"
+          role="search"
+          action="/listings/search"
+          method="GET"
+        >
+          <input
+            class="form-control pink-search-input"
+            type="search"
+            name="location"
+            placeholder="Search country or location"
+            aria-label="Search country or location"
+            value="<%= typeof location !== 'undefined' ? location : '' %>"
+            required
+          />
+
+          <button
+            class="btn btn-pink"
+            type="submit"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/listings/new">My-Travel your home</a>
+        <% if(!currUser){ %>
+          <a class="nav-link" href="/signup"><b>Sign up</b></a>
+          <a class="nav-link" href="/login"><b>Log in</b></a>
+        <% } %>
+        <% if(currUser){ %>
+          <a class="nav-link" href="/logout"><b>Log out</b></a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
